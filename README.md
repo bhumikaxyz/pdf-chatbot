@@ -4,6 +4,12 @@ This project enables users to interact with multiple uploaded PDF documents thro
 
 ---
 
+## Application URL
+
+You can view the deployed application at: [https://huggingface.co/spaces/bhumikaxyz/pdf-chatbot](https://huggingface.co/spaces/bhumikaxyz/pdf-chatbot)
+
+---
+
 ## **Key Features**
 
 * **Document Upload & Processing** : Upload multiple PDF files for processing.

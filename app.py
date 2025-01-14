@@ -17,8 +17,7 @@ from huggingface_hub import login
 
 load_dotenv()
 genai.configure(api_key=os.getenv('GOOGLE_API_KEY'))
-hf_api_key = os.getenv('HUGGINGFACEHUB_API_TOKEN')
-login(token=hf_api_key)
+
 
 def get_pdf_text(pdf_docs):
     text = ""
