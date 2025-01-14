@@ -8,13 +8,17 @@ from sentence_transformers import SentenceTransformer
 from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
 import google.generativeai as genai
 from langchain.memory import ConversationBufferMemory
-from langchain_huggingface import HuggingFaceEndpoint
+from langchain_huggingface import HuggingFaceEndpoint, HuggingFacePipeline
 from langchain.chains import ConversationalRetrievalChain
 from langchain.prompts import PromptTemplate
+from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
+from huggingface_hub import login
 
 
 load_dotenv()
 genai.configure(api_key=os.getenv('GOOGLE_API_KEY'))
+hf_api_key = os.getenv('HUGGINGFACEHUB_API_TOKEN')
+login(token=hf_api_key)
 
 def get_pdf_text(pdf_docs):
     text = ""
@@ -50,6 +54,11 @@ def get_conversation_chain(vector_store):
     # """
     # prompt = PromptTemplate(template=prompt_template, input_variables=['context', 'question'])
 
+    # model_id = 'meta-llama/Llama-3.2-1B'
+    # tokenizer = AutoTokenizer.from_pretrained(model_id, legacy=False)
+    # model = AutoModelForCausalLM.from_pretrained(model_id, device_map='auto')
+    # llm_pipeline = pipeline("text2text-generation", tokenizer=tokenizer, model=model, temperature=0.3)
+    # llm = HuggingFacePipeline(pipeline=llm_pipeline)
     llm = llm = ChatGoogleGenerativeAI(model="gemini-1.5-pro", temperature=0.3)
     memory = ConversationBufferMemory(memory_key='chat_history', return_messages=True)
     conversation_chain = ConversationalRetrievalChain.from_llm(llm=llm,  retriever=vector_store.as_retriever(),
